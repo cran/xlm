@@ -1,0 +1,50 @@
+# R6 classes,
+export("Account")
+export("Ledger")
+export("Transaction")
+
+# Account lookups.
+export("getAccountDetail")
+export("getOperations_Account")
+export("getOffers_Account")
+export("getEffects_Account")
+export("getTransactions_Account")
+export("getPayments_Account")
+
+# Ledger lookups.
+export("getLedgerDetail")
+export("getLedgers")
+export("getOperations_Ledger")
+export("getEffects_Ledger")
+export("getTransactions_Ledger")
+export("getPayments_Ledger")
+
+# Transaction lookups.
+export("getTransactions")
+export("getTransactionDetail")
+export("getEffects_Transaction")
+export("getOperations_Transaction")
+export("getPayments_Transaction")
+
+# DEX and assets.
+export("Orderbook")
+export("getOrderbook")
+export("getAssets")
+
+# Other endpoints.
+export("getPayments")
+export("getEffects")
+export("getOperations")
+
+# Utilities.
+export("distribution")
+export("listToDF")
+export("friendbot")
+export("price")
+
+# Dependencies.
+importFrom("httr", "GET", "content", "add_headers")
+importFrom("RJSONIO", "fromJSON")
+importFrom("utils", "URLencode", "type.convert", "flush.console")
+importFrom("data.table", "rbindlist", "data.table", "is.data.table", "dcast.data.table")
+importFrom("R6", "R6Class", "is.R6Class")
