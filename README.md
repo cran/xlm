@@ -9,6 +9,10 @@ Status](https://www.r-pkg.org/badges/version/xlm)](https://cran.r-project.org/pa
 
 This is not a project maintained by or officially endorsed by the [Stellar Development Foundation.](https://www.stellar.org/)
 
+## Updates
+
+- 14-10-2018 - A number of failing tests have been temporarily removed due to the test network of Horizon being reset. Hard-coded addresses no-longer exist on the network with the transactions associated with them. A boot-strapping script has been implemented.
+
 ## Install
 
 When it is available to pull directly from CRAN, you can do so by running the following:

@@ -1,15 +1,11 @@
-context("Pull multiple effects.")
-
+context("Pull effects data.")
 
 n = 20
-
-e1_id = "0000010157597659137-0000000001"
 
 test_that("The first 20 effects from the network can be pulled.", {
   effects = getEffects(limit = n, domain=domain)
   expect_true(is.data.table(effects))
   expect_equal(nrow(effects), n)
-  expect_equal(effects$id[1], e1_id)
   expect_true(all(c("id","type","type_i", "account",
                     "created_at", "weight", "amount") %in% names(effects)))
 
@@ -20,7 +16,6 @@ test_that("List object can be returned instead of a data.table.", {
   expect_true(exists("_embedded", effects_ls))
   expect_true(exists("records", effects_ls[['_embedded']]))
   expect_length(effects_ls[['_embedded']][['records']], n)
-  expect_equal(effects_ls[['_embedded']][['records']][[1]]$id, e1_id)
 })
 
 

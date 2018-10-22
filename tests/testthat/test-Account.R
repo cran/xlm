@@ -1,6 +1,6 @@
 context("Unit tests for the Accounts object.")
 
-valid_pk = "GA2HGBJIJKI6O4XEM7CZWY5PS6GKSXL6D34ERAJYQSPYA6X6AI7HYW36"
+valid_pk = test_account_1 # from helper-config
 invalid_pk = "qwerty"
 
 a1 = Account$new(valid_pk, "testnet")
@@ -78,9 +78,5 @@ test_that("The method to retrieve effects, transactions etc can be called succes
                sprintf("https://horizon-testnet.stellar.org/accounts/%s/payments?cursor=&limit=%d&order=%s",
                        valid_pk, n, ord))
 
-})
-
-test_that("Bad address fails on initialisation.", {
-  expect_error(Account$new(invalid_pk), "Resource Missing")
 })
 

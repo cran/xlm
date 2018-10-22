@@ -11,5 +11,9 @@
 
 getAccountDetail <- function(pk, data = NA, domain = "public"){
   request = .requestBuilder("accounts", id = pk, key = data, domain = domain)
-  return(.getRequest(request))
+  response = .getRequest(request)
+  if(!is.null(response[['status']])) {
+    if(response[['status']] == 400) stop(response)
+  }
+  return(response)
 }

@@ -1,9 +1,7 @@
 context("Find transactions attached to a specific account.")
 
-valid_pk = "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC"
+valid_pk = test_account_1 # from helper-config
 invalid_pk = "Lord Almighty, I feel my temperature rising."
-
-
 
 test_that("Valid public key returns a 200 with the correct fields populated.", {
   t1 = getTransactions_Account(valid_pk, domain = domain, data.table = FALSE)
@@ -31,6 +29,5 @@ test_that("Parameters can be tuned.", {
 })
 
 test_that("Error handling for bad public key.", {
-  expect_error(getTransactions_Account(invalid_pk, domain = domain, data.table = FALSE),
-               "resource at the url requested was not found")
+  expect_error(getTransactions_Account(invalid_pk, domain = domain, data.table = FALSE))
 })

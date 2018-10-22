@@ -1,9 +1,7 @@
 context("Find payments attached to a specific account.")
 
-valid_pk = "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC"
+valid_pk = test_account_1 # from helper-config
 invalid_pk = "¯\\_(ツ)_/¯"
-
-
 
 test_that("Valid public key returns a 200 with the correct fields populated.", {
   p1 = getPayments_Account(valid_pk, domain = domain, data.table = FALSE)

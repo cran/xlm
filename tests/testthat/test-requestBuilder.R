@@ -1,6 +1,5 @@
 context("Unit tests for request builder - a URL constructor.")
 
-
 pk = "GCEZWKCA5VLDNRLN3RPRJMRZOX3Z6G5CHCGSNFHEYVXM3XOJMDS674JZ"
 hash = "d951a576e31a174bc438de0cf08ccf654f7045d56e0f34bd66ee9bf58dccd44a"
 key = "user-id"
@@ -8,10 +7,10 @@ ledger = 12345
 op = 123456789
 
 test_that("Public network and test network urls are constructed properly.", {
+
   error_msg = "It must be either 'testnet' or 'public'"
 
   expect_error(.requestBuilder("accounts", id = pk, domain = ""), error_msg)
-
   expect_equal(.requestBuilder("accounts", id = pk, domain = domain),
                sprintf("https://horizon-testnet.stellar.org/accounts/%s", pk))
   expect_equal(.requestBuilder("accounts", id = pk, domain = "public"),

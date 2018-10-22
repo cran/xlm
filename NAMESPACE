@@ -2,6 +2,7 @@
 export("Account")
 export("Ledger")
 export("Transaction")
+export("Orderbook")
 
 # Account lookups.
 export("getAccountDetail")
@@ -27,7 +28,6 @@ export("getOperations_Transaction")
 export("getPayments_Transaction")
 
 # DEX and assets.
-export("Orderbook")
 export("getOrderbook")
 export("getAssets")
 
@@ -35,6 +35,10 @@ export("getAssets")
 export("getPayments")
 export("getEffects")
 export("getOperations")
+export("getTrades")
+export("getTradeAggregations")
+export("findPaymentPath")
+export("postTransaction")
 
 # Utilities.
 export("distribution")
@@ -43,7 +47,7 @@ export("friendbot")
 export("price")
 
 # Dependencies.
-importFrom("httr", "GET", "content", "add_headers")
+importFrom("httr", "GET", "content", "add_headers", "POST")
 importFrom("RJSONIO", "fromJSON")
 importFrom("utils", "URLencode", "type.convert", "flush.console")
 importFrom("data.table", "rbindlist", "data.table", "is.data.table", "dcast.data.table")

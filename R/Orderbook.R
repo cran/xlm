@@ -36,8 +36,8 @@ Orderbook <- R6Class("Orderbook",
                                               buying_asset_issuer = buying_asset_issuer,
                                               domain = domain)
 
-                      self$bids = listToDF(response[['bids']])
-                      self$asks = listToDF(response[['asks']])
+                      self$bids = response[['bids']]
+                      self$asks = response[['asks']]
                       self$base = response[['base']]
                       self$counter = response[['counter']]
                       self$domain = domain

@@ -15,7 +15,6 @@ test_that("Orderbooks can be initialised successfully.", {
   expect_true(is.R6Class(Orderbook))
   expect_true(Orderbook$class)
   expect_equal(Orderbook$classname, "Orderbook")
-
   expect_type(orderbook$response$asks, "list")
   expect_type(orderbook$response$bids, "list")
 

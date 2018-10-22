@@ -1,9 +1,7 @@
 context("Testing operations from a specific account.")
 
-valid_pk = "GCO2IP3MJNUOKS4PUDI4C7LGGMQDJGXG3COYX3WSB4HHNAHKYV5YL3VC"
+valid_pk = test_account_1 # from helper-config
 invalid_pk = "GAGAGAGA"
-
-
 
 test_that("Valid public key returns a 200 with the correct fields populated.", {
   a1 = getOperations_Account(valid_pk, domain = domain, data.table = FALSE)
@@ -26,8 +24,4 @@ test_that("Parameters can be tuned.", {
   a3 = getOperations_Account(valid_pk, domain = domain, data.table = FALSE,
                              limit = 56, order = "desc")
   expect_equal(as.character(a3[['_links']][['self']]), target_url)
-})
-
-test_that("Error handling for bad public key.", {
-  expect_error(getOperations_Account(invalid_pk, domain = domain))
 })

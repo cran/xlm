@@ -8,25 +8,45 @@
 
 listToDF <- function(response){
 
-  # If the rows contain a price_r column, then parse it as an orderbook table.
+  # Error handling.
   if(length(response)==0){
     return(list())
   }
-  if(exists("price_r", response[[1]])){
-    return(data.table(
-      price_r_n = sapply(response, function(x){x[['price_r']]['n']}),
-      price_r_d = sapply(response, function(x){x[['price_r']]['d']}),
-      price = sapply(response, function(x){x['price']}),
-      amount = sapply(response, function(x){x['amount']})
-    ))
-  }
-
   if(!exists("records", response[['_embedded']])) {
     stop("Records missing from the response - something went wrong.")
+  }
+  if(!exists("_links", response)) {
+    stop("Links missing from the response - something went wrong.")
   }
   if(length(response[['_embedded']][['records']]) == 0){
     message("There were no records returned for this request.")
     return(data.table())
+  }
+
+  is_trade_agg = grepl("/trade_aggregations", response[['_links']][['self']])
+  # If trades endpoint is called, just return a simple data.table.
+  if(is_trade_agg){
+    dta = response[['_embedded']][['records']]
+    extract = function(x) sapply(dta, function(i) i[[x]])
+    return(data.table(
+      timestamp = extract('timestamp'),
+      trade_count = as.numeric(extract('trade_count')),
+      base_volume = as.numeric(extract('base_volume')),
+      counter_volume = as.numeric(extract('counter_volume')),
+      avg = as.numeric(extract('avg')),
+      high = as.numeric(extract('high')),
+      high_r_n = sapply(dta, function(x) x[['high_r']][['N']]),
+      high_r_d = sapply(dta, function(x) x[['high_r']][['D']]),
+      low = as.numeric(extract('low')),
+      low_r_n = sapply(dta, function(x) x[['low_r']][['N']]),
+      low_r_d = sapply(dta, function(x) x[['low_r']][['D']]),
+      open = as.numeric(extract('open')),
+      open_r_n = sapply(dta, function(x) x[['open_r']][['N']]),
+      open_r_d = sapply(dta, function(x) x[['open_r']][['D']]),
+      close = as.numeric(extract('close')),
+      close_r_n = sapply(dta, function(x) x[['close_r']][['N']]),
+      close_r_d = sapply(dta, function(x) x[['close_r']][['D']])
+    ))
   }
 
   records = response[['_embedded']][['records']]
@@ -39,7 +59,7 @@ listToDF <- function(response){
     # Create a vector of the lengths of each field. We want to unpivot the fields with more than 1 value.
     find_nested_structures = sapply(record, length)
     # If they are all uniform, append the record to the outer table and move on.
-    if(all(find_nested_structures == 1)) return(NULL)
+    if(all(find_nested_structures == 1) || is_trade_agg) return(NULL)
     inds = which(find_nested_structures > 1)
     return(data.table(
       # Take the id of the record to use as a private key, extract the data and create a list of data.tables for the row.

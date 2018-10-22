@@ -1,7 +1,7 @@
 context("Unit tests for the underlying request utilities.")
 
-address_good = "GCEZWKCA5VLDNRLN3RPRJMRZOX3Z6G5CHCGSNFHEYVXM3XOJMDS674JZ"
-address_bad = "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+address_good = test_account_1 # frm helper-config
+address_bad = "GGG"
 
 url_bad = sprintf("https://horizon-testnet.stellar.org/accounts/%s", address_bad)
 url_good = sprintf("https://horizon-testnet.stellar.org/accounts/%s", address_good)
@@ -16,10 +16,6 @@ test_that("Horizon request with valid URL and account succeeds.", {
     url_good)
 })
 
-test_that("Horizon request with bad address returns an appropriate stop message.", {
-  expect_error(.getRequest(url_bad), "(\\[TITLE\\]|\\[TYPE\\]|\\[DETAIL\\])")
-})
-
 test_that("String cleaner parses as expected.", {
   target = "desc"
   expect_equal(.cleanString("DEsc "), target)
@@ -29,7 +25,7 @@ test_that("String cleaner parses as expected.", {
   expect_equal(.cleanString(target), target)
 })
 
-test_that("Common arguments to API calls have appropriate erroe handling.", {
+test_that("Common arguments to API calls have appropriate error handling.", {
 
   order_good = "asc"
   order_bad = "asec"

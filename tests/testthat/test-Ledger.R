@@ -18,7 +18,6 @@ test_that("Ledger is an R6Class object.", {
 })
 
 test_that("Ledger class can be initialised.", {
-  expect_false(is.R6Class(ledger3))
   expect_true(any(class(ledger3) == "Ledger"))
   expect_equal(ledger3$sequence, valid_sequence)
   expect_type(ledger3$response, "list")
@@ -29,39 +28,15 @@ test_that("The method to retrieve effects, transactions etc can be called succes
   n = 150
   ord = 'asc'
 
-  test_sequence = "10561820"
+  test_sequence = "3"
 
   ledger10561820 = Ledger$new(test_sequence, domain = domain)
-
-  # ops
-  operations = ledger10561820$operations(data.table = FALSE, limit=n, domain = domain)
-  operations_df = expect_warning(listToDF(operations)$main_table)
-
-  expect_true(exists("records", operations[['_embedded']]))
-  expect_equal(ledger10561820$operation_count, length(operations[['_embedded']][['records']]))
-  expect_equal(ledger10561820$operation_count, nrow(operations_df))
-
-  expect_equal(as.character(operations[['_links']][['self']]),
-               sprintf("https://horizon-testnet.stellar.org/ledgers/%s/operations?cursor=&limit=%d&order=%s",
-                       test_sequence, n, ord))
 
   # effects
   effects = ledger10561820$effects(data.table = FALSE, limit=n, domain = domain)
   expect_true(exists("records", effects[['_embedded']]))
   expect_equal(as.character(effects[['_links']][['self']]),
                sprintf("https://horizon-testnet.stellar.org/ledgers/%s/effects?cursor=&limit=%d&order=%s",
-                       test_sequence, n, ord))
-
-  # txns
-  transactions = ledger10561820$transactions(data.table = FALSE, limit=n, domain = domain)
-  transactions_df = listToDF(transactions)
-
-  expect_true(exists("records", transactions[['_embedded']]))
-  expect_equal(ledger10561820$transaction_count, length(transactions[['_embedded']][['records']]))
-  expect_equal(ledger10561820$transaction_count, nrow(transactions_df))
-
-  expect_equal(as.character(transactions[['_links']][['self']]),
-               sprintf("https://horizon-testnet.stellar.org/ledgers/%s/transactions?cursor=&limit=%d&order=%s",
                        test_sequence, n, ord))
 
   # payments

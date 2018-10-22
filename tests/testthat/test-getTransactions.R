@@ -1,6 +1,5 @@
 context("Pull multiple transactions.")
 
-
 n = 20
 
 test_that("The first 20 transactions from the network can be pulled.", {
@@ -10,7 +9,6 @@ test_that("The first 20 transactions from the network can be pulled.", {
   expect_equal(transactions$operation_count[1], 10)
   expect_true(all(c("id","hash","ledger",
                     "created_at", "fee_paid", "source_account") %in% names(transactions)))
-
 })
 
 test_that("List object can be returned instead of a data.table.", {
